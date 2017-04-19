@@ -48,13 +48,12 @@ Greeks blsGreeks(double S, double K, double T, double v, const char* right, doub
     if (v == 0) return g;
     double d1  = (log(S/K) + ((r-d)+(v*v/2.0)) * T) / (v*sqrt(T));
     double d2  = d1 - v*sqrt(T);
-
-    double t_0 = -(S*v*normPDF(d1))/(2*sqrt(T)); // same term of theta for both right of C and P
-
+    
     // set greeks depending on the right (gamma and vega are right-neutral)
     g.gamma    = normPDF(d1) / (S*v*sqrt(T));
     g.vega     = S*sqrt(T)*normPDF(d1);
 
+    double t_0 = -(S*v*normPDF(d1))/(2*sqrt(T)); // same term of theta for both right of C and P
     if (strcmp(right,"C") == 0){
         g.delta = normCDF(d1);        
         g.theta = t_0 - r*K*exp(-r*T)*normCDF(d2);
@@ -64,6 +63,7 @@ Greeks blsGreeks(double S, double K, double T, double v, const char* right, doub
         g.delta = normCDF(-d1);
         g.theta = t_0 + r*K*exp(-r*T)*normCDF(-d2);
         g.rho   = -K*T*exp(-r*T)*normCDF(-d2);
+        
     } else {
         fprintf(stderr, "Right must be either call or put -- exiting\n");
         exit(-1);
