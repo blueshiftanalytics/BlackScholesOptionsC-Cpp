@@ -1,7 +1,7 @@
 /*
 Functions in this file take care of all the black-scholes pricing/implied volatility calculations.
 
-@author: Justin Clark of Blueshift Analytics
+@author: Justin Clark
 
 This software is free and open to the public, but if used in a commercial setting, please cite this project.
 */
